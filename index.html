@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>✨ A Locked Surprise for Rida! ✨</title>
+    <style>
+      /* --- FONTS & BASE --- */
+      @import url("https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;600;700&display=swap");
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+      }
+      body {
+        background: #fdf6ff;
+        color: #333;
+        overflow-x: hidden;
+        scroll-behavior: smooth;
+        cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40"><text x="0" y="30" style="font-size: 25px;">💖</text></svg>')
+            20 20,
+          auto;
+      }
+
+      /* 2. Rainbow Gradient Header (Bling) */
+      header {
+        text-align: center;
+        padding: 1.7rem;
+        background: linear-gradient(120deg, #ff80b5, #ffcce0, #a0d4ff, #ff80b5);
+        background-size: 300% 100%;
+        color: white;
+        font-size: 1.7rem;
+        font-weight: 700;
+        letter-spacing: 2px;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        animation: rainbow-shift 8s ease infinite;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+
+      @keyframes rainbow-shift {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
+      /* --- CONTENT WRAPPER (HIDDEN BY DEFAULT) --- */
+      #content-wrapper {
+        display: none; /* Hide all birthday content until Nov 16th */
+      }
+
+      /* ---------- COUNTDOWN STYLES ---------- */
+      .countdown-hero {
+        height: 100vh;
+        display: flex;
+        /* display: none !important; Hidden by default, shown only before the date */
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        background: linear-gradient(to bottom right, #ffe6f0, #f9f1ff);
+      }
+      .countdown-hero h1 {
+        font-family: "Pacifico", cursive;
+        font-size: 3.5rem;
+        color: #ff3385;
+        text-shadow: 2px 2px 0 #fff;
+        margin-bottom: 1rem;
+      }
+      .countdown-hero h2 {
+        font-size: 1.5rem;
+        color: #555;
+        margin-bottom: 3rem;
+      }
+      #countdown {
+        display: flex;
+        gap: 20px;
+        padding: 30px;
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        border: 4px solid #ff66b3;
+      }
+      .timer-unit {
+        text-align: center;
+        min-width: 80px;
+      }
+      .timer-unit span {
+        display: block;
+        font-size: 3rem;
+        font-weight: 700;
+        color: #8a2be2; /* Violet */
+        line-height: 1.1;
+      }
+      .timer-unit small {
+        font-size: 1rem;
+        color: #555;
+        text-transform: uppercase;
+        font-weight: 600;
+      }
+      /* Custom Cursor Trail */
+      .heart-trail {
+        position: absolute;
+        top: 0;
+        left: 0;
+        pointer-events: none; /* Allows clicks to go through */
+        font-size: 20px;
+        animation: fade-out 1s forwards;
+        z-index: 9999;
+      }
+      @keyframes fade-out {
+        0% {
+          opacity: 1;
+          transform: scale(1);
+        }
+        100% {
+          opacity: 0;
+          transform: scale(0.5) translateY(-20px);
+        }
+      }
+
+      /* ---------- HERO (SURPRISE CONTENT) ---------- */
+      .hero {
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        background: linear-gradient(to bottom right, #ffe6f0, #f9f1ff);
+        position: relative;
+        overflow: hidden;
+      }
+
+      /* Starry Background Effect */
+      .hero::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: radial-gradient(circle, #ffffff 1px, transparent 1px);
+        background-size: 15px 15px;
+        opacity: 0.5;
+        animation: sparkle 15s linear infinite;
+        pointer-events: none;
+      }
+
+      @keyframes sparkle {
+        0% {
+          background-position: 0% 0%;
+        }
+        100% {
+          background-position: 100% 100%;
+        }
+      }
+
+      .hero h1 {
+        font-family: "Pacifico", cursive;
+        font-size: 4rem;
+        color: #ff3385;
+        text-shadow: 3px 3px 0 #fff;
+        margin-bottom: 0.5rem;
+      }
+      .hero h2 {
+        font-size: 1.8rem;
+        color: #555;
+        margin-bottom: 2rem;
+      }
+      .btn {
+        background: #ff66b3;
+        color: white;
+        padding: 1rem 2.5rem;
+        border: none;
+        border-radius: 40px;
+        cursor: pointer;
+        font-weight: 700;
+        font-size: 1.1rem;
+        box-shadow: 0 8px 15px rgba(255, 102, 179, 0.5);
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      }
+      .btn:hover {
+        background: #ff3385;
+        transform: scale(1.15) rotate(-2deg);
+        box-shadow: 0 12px 20px rgba(255, 51, 133, 0.7);
+      }
+
+      /* --- GIFT BOX & MESSAGE STYLES (CONTINUED) --- */
+      .gift-section {
+        padding: 5rem 2rem 2rem;
+        text-align: center;
+        background: #fff;
+      }
+      .gift-box {
+        width: 180px;
+        height: 180px;
+        background: #ff66b3;
+        margin: 3rem auto 1rem;
+        position: relative;
+        cursor: pointer;
+        border-radius: 15px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3),
+          inset 0 0 10px rgba(255, 255, 255, 0.5);
+        transition: transform 0.3s ease;
+      }
+      .gift-box:hover {
+        transform: translateY(-5px) scale(1.05);
+      }
+      .gift-lid {
+        width: 200px;
+        height: 50px;
+        background: #ff3385;
+        position: absolute;
+        top: -50px;
+        left: -10px;
+        border-radius: 15px 15px 0 0;
+        z-index: 2;
+        transition: all 0.7s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.1);
+        transform-origin: bottom center;
+      }
+      .gift-ribbon {
+        width: 25px;
+        height: 180px;
+        background: #fff;
+        position: absolute;
+        left: 77.5px;
+        top: 0;
+        z-index: 1;
+      }
+      .gift-ribbon::before {
+        content: "";
+        width: 100%;
+        height: 180px;
+        background: #fff;
+        transform: rotate(90deg);
+        position: absolute;
+      }
+      .hidden-message {
+        opacity: 0;
+        transform: perspective(1000px) rotateY(-90deg);
+        transition: all 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        max-width: 800px;
+        margin: 2rem auto;
+        background: #fff0f6;
+        padding: 2.5rem;
+        border-radius: 25px;
+        color: #333;
+        font-size: 1.2rem;
+        line-height: 1.8;
+        box-shadow: 0 10px 30px rgba(255, 102, 179, 0.3);
+        border: 3px solid #ff66b3;
+      }
+      .hidden-message.show {
+        opacity: 1;
+        transform: perspective(1000px) rotateY(0deg);
+      }
+      .hidden-message b {
+        color: #ff3385;
+        font-weight: 700;
+      }
+
+      /* Confetti & Poppers */
+      .confetti,
+      .popper {
+        position: fixed;
+        top: -10px;
+        animation: fall-popper 8s linear infinite;
+        opacity: 0.8;
+        pointer-events: none;
+        z-index: 50;
+        width: 8px;
+        height: 8px;
+      }
+      .confetti {
+        border-radius: 50%;
+      }
+      .popper {
+        border-radius: 2px;
+        transform: rotate(var(--rotation));
+      }
+      @keyframes fall-popper {
+        0% {
+          transform: translateY(0) rotate(0deg);
+        }
+        100% {
+          transform: translateY(100vh) rotate(360deg);
+        }
+      }
+      .burst-confetti {
+        position: absolute;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        animation: burst 1.5s ease-out forwards;
+      }
+      @keyframes burst {
+        0% {
+          transform: translate(0, 0) scale(1);
+          opacity: 1;
+        }
+        100% {
+          transform: translate(var(--x), var(--y)) scale(0.2);
+          opacity: 0;
+        }
+      }
+
+      /* 💖 MEMORIES SECTION 💖 */
+      .memories-section {
+        padding: 5rem 1rem;
+        background: linear-gradient(to top left, #f9f1ff, #f0e6ff);
+        text-align: center;
+      }
+      .memories-section h2 {
+        font-family: "Pacifico", cursive;
+        color: #8a2be2;
+        font-size: 2.5rem;
+        margin-bottom: 2rem;
+        text-shadow: 1px 1px 0 #fff;
+      }
+      .photo-grid {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 30px;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      .memory-card {
+        background: #fff;
+        border-radius: 15px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        padding: 15px;
+        width: 300px;
+        transition: transform 0.4s ease-in-out;
+      }
+      .memory-card:hover {
+        transform: translateY(-10px) rotate(2deg) scale(1.05);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+      }
+      .memory-card img {
+        width: 100%;
+        height: 250px;
+        object-fit: cover;
+        border-radius: 10px;
+        margin-bottom: 10px;
+        border: 4px solid #ff66b3;
+      }
+      .memory-card p {
+        font-style: italic;
+        color: #666;
+        font-size: 1rem;
+        padding: 0 5px;
+      }
+
+      footer {
+        text-align: center;
+        padding: 2rem;
+        background: #f0f0f0;
+        color: #777;
+        font-size: 1rem;
+      }
+
+      @media (max-width: 600px) {
+        .hero h1 {
+          font-size: 2.5rem;
+        }
+        .hero h2 {
+          font-size: 1.2rem;
+        }
+        header {
+          font-size: 1.2rem;
+        }
+        .memory-card {
+          width: 90%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>✨ A Magical Birthday Surprise for Rida! ✨</header>
+
+    <section class="countdown-hero" id="countdown-hero">
+      <h1>The Magic is Locked! 🔒</h1>
+      <h2>It unlocks on November 16th! Until then...</h2>
+      <div id="countdown">
+        <div class="timer-unit">
+          <span id="days">00</span><small>Days</small>
+        </div>
+        <div class="timer-unit">
+          <span id="hours">00</span><small>Hours</small>
+        </div>
+        <div class="timer-unit">
+          <span id="minutes">00</span><small>Minutes</small>
+        </div>
+        <div class="timer-unit">
+          <span id="seconds">00</span><small>Seconds</small>
+        </div>
+      </div>
+    </section>
+
+    <div id="content-wrapper">
+      <section class="hero" id="home">
+        <h1>Happy Birthday <span>Rida!</span> 💖</h1>
+        <h2>This little gift holds a huge wish just for you... 🎁</h2>
+        <button class="btn" onclick="scrollToGift()">Open Gift</button>
+      </section>
+
+      <section class="gift-section" id="gift">
+        <h2>🎁 Your Big Birthday Gift Awaits! Click to Reveal!</h2>
+        <div class="gift-box" id="giftBox">
+          <div class="gift-lid" id="giftLid"></div>
+          <div class="gift-ribbon"></div>
+        </div>
+        <div class="hidden-message" id="hiddenMessage">
+          💌 <b>My Dearest Rida,</b><br /><br />
+          You are a rare kind of person — the kind who makes ordinary days feel
+          special and turns simple moments into beautiful memories. Every day
+          spent with you is a gift! On your birthday, I wish you laughter that
+          never fades, dreams that always bloom, and happiness that follows you
+          everywhere. May your year be as bright and amazing as you are! 🌸<br /><br />
+          Thank you for being you — my genuine, kind, and truly unforgettable
+          bestie.<br /><br />
+          <b>— With all my love, Ahmad 💫</b>
+        </div>
+        <button
+          class="btn"
+          style="margin-top: 3rem"
+          onclick="scrollToMemories()"
+        >
+          See Our Best Memories!
+        </button>
+      </section>
+
+      <section class="memories-section" id="memories">
+        <h2>📸 Memories! 🎞️</h2>
+        <div class="photo-grid">
+          <div class="memory-card">
+            <img src="Assets/img1.jpeg" alt="A special memory with Rida" />
+            <p>
+              "The day we laughed until we cried—I'll never forget that moment!"
+            </p>
+          </div>
+
+          <div class="memory-card">
+            <img src="Assets/img2.jpeg" alt="A fun adventure with Rida" />
+            <p>
+              "Our crazy adventure trip! Thanks for always being up for
+              anything."
+            </p>
+          </div>
+
+          <div class="memory-card">
+            <img src="Assets/img3.jpeg" alt="A nice quiet time with Rida" />
+            <p>
+              "This pic just captures our friendship perfectly. Always there for
+              each other. ❤️"
+            </p>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <footer>Made with 💖 and a little bit of magic by Ahmad | © 2025</footer>
+
+    <script>
+      // --- DATE LOCK LOGIC ---
+      // Target date: November 16, 2025, 00:00:00 (Adjust the year if needed!)
+      const targetDate = new Date("November 16, 2025 00:00:00").getTime();
+
+      const countdownHero = document.getElementById("countdown-hero");
+      const contentWrapper = document.getElementById("content-wrapper");
+
+      function updateCountdown() {
+        const now = new Date().getTime();
+        const distance = targetDate - now;
+
+        // Check if the time has passed
+        if (distance < 0) {
+          clearInterval(timerInterval);
+          countdownHero.style.display = "none";
+          contentWrapper.style.display = "block"; // Reveal the surprise!
+          // OPTIONAL: Play a short animation or sound here
+          return;
+        }
+
+        // Calculate days, hours, minutes, and seconds
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor(
+          (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+        );
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        // Display the result in the elements
+        document.getElementById("days").innerHTML = String(days).padStart(
+          2,
+          "0"
+        );
+        document.getElementById("hours").innerHTML = String(hours).padStart(
+          2,
+          "0"
+        );
+        document.getElementById("minutes").innerHTML = String(minutes).padStart(
+          2,
+          "0"
+        );
+        document.getElementById("seconds").innerHTML = String(seconds).padStart(
+          2,
+          "0"
+        );
+
+        // Hide content until the date
+        countdownHero.style.display = "flex";
+        contentWrapper.style.display = "none";
+      }
+
+      // Run the function immediately and then every second
+      updateCountdown();
+      const timerInterval = setInterval(updateCountdown, 1000);
+
+      // --- NON-TIMER FUNCTIONS ---
+      function scrollToGift() {
+        document.getElementById("gift").scrollIntoView({ behavior: "smooth" });
+      }
+
+      function scrollToMemories() {
+        document
+          .getElementById("memories")
+          .scrollIntoView({ behavior: "smooth" });
+      }
+
+      const colors = [
+        "#ff66b3",
+        "#ffb3d9",
+        "#a0d4ff",
+        "#ff99cc",
+        "#ff3385",
+        "#fff",
+      ];
+
+      // --- CONFETTI & POPPERS GENERATOR (Runs immediately on load) ---
+      for (let i = 0; i < 70; i++) {
+        const isPopper = i % 3 === 0;
+        const c = document.createElement("div");
+
+        if (isPopper) {
+          c.classList.add("popper");
+          c.style.background =
+            colors[Math.floor(Math.random() * colors.length)];
+          c.style.setProperty("--rotation", `${Math.random() * 360}deg`);
+        } else {
+          c.classList.add("confetti");
+          c.style.background =
+            colors[Math.floor(Math.random() * colors.length)];
+          c.style.width = c.style.height = 5 + Math.random() * 8 + "px";
+        }
+
+        c.style.left = Math.random() * 100 + "vw";
+        c.style.animationDelay = -Math.random() * 5 + "s";
+        c.style.animationDuration = 5 + Math.random() * 5 + "s";
+        document.body.appendChild(c);
+      }
+      // --- END GENERATOR ---
+
+      // Gift box interaction
+      const giftBox = document.getElementById("giftBox");
+      const giftLid = document.getElementById("giftLid");
+      const message = document.getElementById("hiddenMessage");
+      let opened = false;
+
+      if (giftBox) {
+        // Check if the element exists (i.e., if content is revealed)
+        giftBox.addEventListener("click", () => {
+          if (opened) return;
+          opened = true;
+
+          giftLid.style.transform = "translateY(-180px) rotate(-45deg)";
+          giftLid.style.opacity = "0";
+
+          message.classList.add("show");
+          createConfettiBurst(giftBox);
+        });
+      }
+
+      // Burst confetti when gift opens (Localized Burst)
+      function createConfettiBurst(targetElement) {
+        const rect = targetElement.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+
+        for (let i = 0; i < 100; i++) {
+          const c = document.createElement("div");
+          c.classList.add("burst-confetti");
+
+          c.style.background =
+            colors[Math.floor(Math.random() * colors.length)];
+
+          c.style.left = `${centerX}px`;
+          c.style.top = `${centerY}px`;
+
+          const angle = Math.random() * 2 * Math.PI;
+          const distance = Math.random() * 350;
+
+          c.style.setProperty("--x", `${Math.cos(angle) * distance}px`);
+          c.style.setProperty("--y", `${Math.sin(angle) * distance - 80}px`);
+
+          document.body.appendChild(c);
+          setTimeout(() => c.remove(), 1500);
+        }
+      }
+
+      // --- INTERACTIVE CURSOR TRAIL ---
+      document.addEventListener("mousemove", (e) => {
+        if (Math.random() > 0.6) return; // Only spawn a heart 40% of the time for subtlety
+
+        const heart = document.createElement("span");
+        heart.classList.add("heart-trail");
+        heart.innerHTML = "✨"; // Use an emoji like '💖' or '✨'
+
+        // Position the heart slightly offset from the cursor
+        heart.style.left = e.clientX + 5 + "px";
+        heart.style.top = e.clientY + 5 + "px";
+
+        document.body.appendChild(heart);
+
+        // Remove the heart after the animation ends
+        setTimeout(() => {
+          heart.remove();
+        }, 1000);
+      });
+    </script>
+  </body>
+</html>
